@@ -252,11 +252,12 @@ export default function Home() {
     return text;
   };
 
-  const totalCompleted =
-    data.inspection.filter((i) => i.completed).length +
-    data.issues.filter((i) => i.completed).length;
-  const totalItems = data.inspection.length + data.issues.length;
-  const overallPercentage = Math.round((totalCompleted / totalItems) * 100);
+  // Overall status bar should reflect only 'inspection' items (exclude possible issues)
+  const totalCompletedInspection = data.inspection.filter((i) => i.completed).length;
+  const totalInspectionItems = data.inspection.length;
+  const overallPercentage = Math.round(
+    (totalCompletedInspection / totalInspectionItems) * 100
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -277,7 +278,7 @@ export default function Home() {
                 {overallPercentage}%
               </div>
               <p className="text-sm text-gray-600">
-                {totalCompleted} из {totalItems}
+                {totalCompletedInspection} из {totalInspectionItems}
               </p>
             </div>
           </div>
